@@ -1,0 +1,7 @@
+
+Container properties:
+
+Associative
+Elements in associative containers are referenced by their key and not by their absolute position in the container.
+
+

@@ -1,0 +1,22 @@
+ root@beaglebone:/sys# find . -name "ebbchar"
+ ./devices/virtual/ebb/ebbchar
+ ./class/ebb/ebbchar
+ ./module/ebbchar
+
+We then need to identify the KERNEL and SUBSYSTEM values about which to write the rule. You can use the udevadm command to perform this task:
+ molloyd@beaglebone:~/exploringBB/extras/kernel/ebbchar$ udevadm info -a -p /sys/class/ebb/ebbchar
+ Udevadm info starts with the device specified by the devpath and then walks up the chain of parent
+ devices. It prints for every device found, all possible attributes in the udev rules key format. A
+ rule to match, can be composed by the attributes of the device and the attributes from one single
+ parent device.
+           looking at device '/devices/virtual/ebb/ebbchar':
+              KERNEL=="ebbchar"
+              SUBSYSTEM=="ebb"
+              DRIVER==""
+
+The rules are contained in the /etc/udev/rules.d directory. A new rule can be added as a file using these values, where the file begins with a priority number. Using a name such as 99-ebbchar.rules creates a new rule with the lowest priority, so that it does not interfere with other device rules. The rule can be written as in Listing 5 and placed in the /etc/udev/rules.d directory as follows:
+ molloyd@beaglebone:/etc/udev/rules.d$ ls
+ 50-hidraw.rules  50-spi.rules  60-omap-tty.rules  70-persistent-net.rules 99-ebbchar.rules
+ molloyd@beaglebone:/etc/udev/rules.d$ more 99-ebbchar.rules
+ #Rules file for the ebbchar device driver
+ KERNEL=="ebbchar", SUBSYSTEM=="ebb", MODE="0666"

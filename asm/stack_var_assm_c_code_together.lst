@@ -1,0 +1,83 @@
+   1              		.file	"stack_var.c"
+   2              		.text
+   3              	.Ltext0:
+   4              		.section	.rodata
+   5              	.LC0:
+   6 0000 73756D20 		.string	"sum is %d\n"
+   6      69732025 
+   6      640A00
+   7              		.text
+   8              		.globl	foo
+  10              	foo:
+  11              	.LFB0:
+  12              		.file 1 "stack_var.c"
+   1:stack_var.c   **** #include<stdio.h>
+   2:stack_var.c   **** 
+   3:stack_var.c   **** void foo(void) {
+  13              		.loc 1 3 0
+  14              		.cfi_startproc
+  15 0000 55       		pushq	%rbp
+  16              		.cfi_def_cfa_offset 16
+  17              		.cfi_offset 6, -16
+  18 0001 4889E5   		movq	%rsp, %rbp
+  19              		.cfi_def_cfa_register 6
+  20 0004 4883EC10 		subq	$16, %rsp
+   4:stack_var.c   **** 
+   5:stack_var.c   **** int arr;
+   6:stack_var.c   **** int add1,add2;
+   7:stack_var.c   **** 
+   8:stack_var.c   **** add1=4;
+  21              		.loc 1 8 0
+  22 0008 C745F404 		movl	$4, -12(%rbp)
+  22      000000
+   9:stack_var.c   **** arr = 5;
+  23              		.loc 1 9 0
+  24 000f C745F805 		movl	$5, -8(%rbp)
+  24      000000
+  10:stack_var.c   **** add2= add1+arr;
+  25              		.loc 1 10 0
+  26 0016 8B45F8   		movl	-8(%rbp), %eax
+  27 0019 8B55F4   		movl	-12(%rbp), %edx
+  28 001c 01D0     		addl	%edx, %eax
+  29 001e 8945FC   		movl	%eax, -4(%rbp)
+  11:stack_var.c   **** printf("sum is %d\n",add2);
+  30              		.loc 1 11 0
+  31 0021 8B45FC   		movl	-4(%rbp), %eax
+  32 0024 89C6     		movl	%eax, %esi
+  33 0026 BF000000 		movl	$.LC0, %edi
+  33      00
+  34 002b B8000000 		movl	$0, %eax
+  34      00
+  35 0030 E8000000 		call	printf
+  35      00
+  12:stack_var.c   **** }
+  36              		.loc 1 12 0
+  37 0035 C9       		leave
+  38              		.cfi_def_cfa 7, 8
+  39 0036 C3       		ret
+  40              		.cfi_endproc
+  41              	.LFE0:
+  43              		.globl	main
+  45              	main:
+  46              	.LFB1:
+  13:stack_var.c   **** 
+  14:stack_var.c   **** int main(void) {
+  47              		.loc 1 14 0
+  48              		.cfi_startproc
+  49 0037 55       		pushq	%rbp
+  50              		.cfi_def_cfa_offset 16
+  51              		.cfi_offset 6, -16
+  52 0038 4889E5   		movq	%rsp, %rbp
+  53              		.cfi_def_cfa_register 6
+  15:stack_var.c   **** foo();
+  54              		.loc 1 15 0
+  55 003b E8000000 		call	foo
+  55      00
+  16:stack_var.c   **** }
+  56              		.loc 1 16 0
+  57 0040 5D       		popq	%rbp
+  58              		.cfi_def_cfa 7, 8
+  59 0041 C3       		ret
+  60              		.cfi_endproc
+  61              	.LFE1:
+  63              	.Letext0:

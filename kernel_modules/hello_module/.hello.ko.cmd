@@ -1,0 +1,1 @@
+cmd_/home/saurabh/coding/kernel_modules/hello.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/saurabh/coding/kernel_modules/hello.ko /home/saurabh/coding/kernel_modules/hello.o /home/saurabh/coding/kernel_modules/hello.mod.o

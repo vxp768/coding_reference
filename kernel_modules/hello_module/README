@@ -1,0 +1,21 @@
+ $ sudo apt-get update
+ $ apt-cache search linux-headers-$(uname -r)
+ linux-headers-3.16.0-4-amd64 - Header files for Linux 3.16.0-4-amd64
+ $ sudo apt-get install linux-headers-3.16.0-4-amd64
+ $ cd /usr/src/linux-headers-3.16.0-4-amd64/
+ /usr/src/linux-headers-3.16.0-4-amd64$ ls
+ arch  include  Makefile  Module.symvers  scripts
+
+
+
+
+
+
+
+
+
+
+
+
+//order of param don't matter
+sudo insmod hello.ko howmany=5 name=Saurabh
